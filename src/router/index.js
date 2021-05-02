@@ -5,7 +5,9 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home'
 import Welcome from "../components/Welcome";
 import Users from "../components/user/Users";
-import Cate from "../components/goods/Cate"
+
+const Cate = () => import( "../components/goods/Cate")
+//懒加载 都用这个
 Vue.use(VueRouter)
 
 const routes = [

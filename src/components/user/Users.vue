@@ -9,7 +9,7 @@
     <!--卡片视图-->
     <el-card>
       <div slot="header">
-        <span>卡片名称</span>
+        <span>用户列表</span>
         <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
       </div>
       <body>
