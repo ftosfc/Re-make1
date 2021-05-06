@@ -118,7 +118,7 @@ export default {
     this.getUserList()
   },
   methods: {
-    async getUserList() {
+     getUserList() {
       // const {data: res} = await this.$http.get('users', {params: this.queryInfo})
       // console.log(res);
       // if (res.meta.status !== 200) return this.$message.error('获取用户失败');

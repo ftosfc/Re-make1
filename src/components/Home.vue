@@ -5,7 +5,7 @@
       <el-header>
         <div>
           <img src="../assets/logo-home.jpg" style="width: 50px" alt="">
-          <span>电商管理</span>
+          <span>网络</span>
         </div>
         <el-button type="info" @click="logout">
           退出
@@ -69,7 +69,7 @@ export default {
   //   this.getMenuList()
   // },
   name: "Home",
-  data() {
+  data: function () {
     return {
       //左侧菜单栏
       menulist: [{
@@ -77,8 +77,8 @@ export default {
         authName: '网络拓扑',
         path: '',
         children: [
-          {id: 1 - 1, authName: '网络逻辑拓扑', path: '/netlogtopo',},
-          {id: 1 - 2, authName: '网络物理拓扑', path: '/netmactopo',}
+          {id: 1_1, authName: '网络逻辑拓扑', path: 'netlogic',},
+          {id: 1_2, authName: '网络物理拓扑', path: 'netmac',}
         ]
       },
         {
@@ -86,23 +86,23 @@ export default {
           authName: '工控网络威胁检测',
           path: '',
           children: [
-            {id: 2 - 1, authName: '流量静态特征检测', path: '/users',},
-            {id: 2 - 2, authName: '流量时序特征检测', path: '/ipfix',},
-            {id: 2 - 3, authName: '敏感协议分析', path: '',},]
+            {id: 2_1, authName: '流量静态特征检测', path: 'users',},
+            {id: 2_2, authName: '流量时序特征检测', path: 'ipfix',},
+            {id: 2_3, authName: '敏感协议分析', path: '',},]
         },
         {
           id: 3,
           authName: '数字孪生',
           path: '',
           children: [
-            {id: 3 - 1, authName: '安全性分析', path: '',},
-            {id: 3 - 2, authName: '网络状况模拟', path: '',},
+            {id: 3_1, authName: '安全性分析', path: 'secanalysis',},
+            {id: 3_2, authName: '网络状况模拟', path: 'netstatus',},
           ]
         },
         {
           id: 5,
           authName: 'Pcap文件分析',
-          path: '',
+          path: '/ate',
           children: []
         },
 
@@ -117,12 +117,12 @@ export default {
     },
 
     //获取左侧菜单数据
-    // async getMenuList() {
-    //   const {data: res} = await this.$http.get('menus')
-    //   if (res.meta.status != 200) return this.$message.error(res.meta.msg);
-    //   this.menulist = res.data;
-    //   console.log(res)
-    // },
+    async getMenuList() {
+      const {data: res} = await this.$http.get('menus')
+      if (res.meta.status != 200) return this.$message.error(res.meta.msg);
+      this.menulist = res.data;
+      console.log(res)
+    },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
     }
@@ -132,7 +132,7 @@ export default {
 
 <style lang="less" scoped>
 .el-header {
-  background-color: #FFFFCC;
+  background-color: #FFF;
   display: flex;
   justify-content: space-between;
   padding-left: 0;

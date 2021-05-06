@@ -4,8 +4,14 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home'
 import Welcome from "../components/Welcome";
-import Users from "../components/user/Users";
-
+// import Users from "../components/user/Users";
+const Users = () => import("../components/user/Users")
+const Ipfix = () => import("../components/user/Ipfix")
+const Netlogic = () => import("../components/topo/Netlogic")
+const Netmac = () => import("../components/topo/Netmac")
+const Ate = () => import("../components/Ate")
+const Netstatus = () => import("../components/twin/Netstatus")
+const Secanalysis = () => import("../components/twin/Secanalysis")
 Vue.use(VueRouter)
 
 const routes = [
@@ -17,7 +23,13 @@ const routes = [
         redirect: '/welcome',
         children: [
             {path: '/welcome', component: Welcome},
-            {path: '/users', component: Users}
+            {path: '/users', component: Users},
+            {path: '/ipfix', component: Ipfix},
+            {path: '/netlogic', component: Netlogic},
+            {path: '/netmac', component: Netmac},
+            {path: '/ate', component: Ate},
+            {path: '/netstatus', component: Netstatus},
+            {path: '/secanalysis', component: Secanalysis}
         ]
     },
 
