@@ -12,9 +12,11 @@ axios.interceptors.request.use(config=>{
   return config;
 })
 
+import echarts from '_echarts@4.8.0@echarts'
+
 Vue.config.productionTip = false
 Vue.prototype.$http=axios
-
+Vue.prototype.$echarts = echarts
 new Vue({
   router,
   store,
