@@ -8,10 +8,10 @@
     <el-card>
       <div slot="header">
         <span>网络物理拓扑</span>
-        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="startMacTopo">生成拓扑</el-button>
       </div>
       <body>
-      <div id="macGraph" style="width: 100%; height: 690px" ref="macGraph"></div>
+      <div id="macGraph" style="width: 100%; height: 690px" ref="macGraph">a</div>
       </body>
 
     </el-card>
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import {sendWebsocket, closeWebsocket} from '@/plugins/websocket.js'
+
 export default {
   name: "Netmac",
   data() {
@@ -373,47 +375,90 @@ export default {
             }]
         }]
       },
-      i: 30
+      i: 30,
+      isStart: false,
+      myChart: '',
+      timeInterval: ''
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.drawGraph();
-    });
+    // this.$nextTick(() => {
+    //   console.log(this.isStart)
+    //   this.drawGraph();
+    // });
+  }, beforeDestroy() {
+    // 页面销毁时关闭ws。因为有可能ws连接接收数据尚未完成，用户就跳转了页面
+    // 在需要主动关闭ws的地方都可以调用该方法
+    closeWebsocket()
   },
   methods: {
     //画mac拓扑图
     drawGraph() {
       let myChart = this.$echarts.init(this.$refs.macGraph);
+      this.myChart = myChart;
       myChart.showLoading();
+      if (this.isStart) {
+        myChart.setOption(this.option);
+        let res = []
+        this.timeInterval = setInterval(() => {
+          // this.option.series[0].data.push({
+          //   id: this.i,
+          //   category: 4,
+          //   name: this.i + 'k',
+          //   value: 20,
+          // });
+          this.option.series[0].data.push({
+            id: this.i,
+            category: 4,
+            name: this.i + 'k',
+            value: 20,
+          })
+          console.log(this.i++)
+          res = this.option.series[0].data
 
-      myChart.setOption(this.option);
-      let res=[]
-      setInterval(() => {
-        // this.option.series[0].data.push({
-        //   id: this.i,
-        //   category: 4,
-        //   name: this.i + 'k',
-        //   value: 20,
-        // });
-        this.option.series[0].data.push({
-          id: this.i,
-          category: 4,
-          name: this.i + 'k',
-          value: 20,
-        })
-        console.log(this.i++)
-        res= this.option.series[0].data
+          myChart.setOption({
+            series: [{
+              data: res
+            }]
+          })
+        }, 500)//此处要理解为什么是1000*i
 
-        myChart.setOption({
-          series: [{
-            data: res
-          }]
-        })
-      }, 100)//此处要理解为什么是1000*i
+        myChart.hideLoading();
+        window.onresize = myChart.resize;
+      }
+    },
 
-      myChart.hideLoading();
-      window.onresize = myChart.resize;
+    wsMessage(data) {
+      const dataJson = data
+      console.log(dataJson)
+      // 这里写拿到数据后的业务代码
+    },
+    // ws连接失败，组件要执行的代码
+    wsError() {
+      // 比如取消页面的loading
+    },
+    requstWs() {
+      // 防止用户多次连续点击发起请求，所以要先关闭上次的ws请求。
+      closeWebsocket()
+      // 跟后端协商，需要什么参数数据给后台
+      const obj = {
+        monitorUrl: 'xxxxxxxxxxxxx',
+        userName: 'xxxxxxxxxx'
+      }
+      // 发起ws请求
+      sendWebsocket('ws://test.ws.com', obj, this.wsMessage, this.wsError)
+    },
+
+
+    startMacTopo() {
+      if (this.isStart) {
+        window.clearInterval(this.timeInterval)
+        this.myChart.clear()
+      }
+      this.isStart = !this.isStart;
+
+      this.drawGraph()
+      console.log(this.isStart);
     },
     getMacList() {
       // const {data: res} = await this.$http.get('users', {params: this.queryInfo})

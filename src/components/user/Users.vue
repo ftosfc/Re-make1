@@ -19,7 +19,7 @@
 
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input placeholder="请输入内容">
+            <el-input placeholder="请输入内容" v-model="searchInfo" clearable>
               <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
           </el-col>
@@ -32,8 +32,11 @@
             placement="right"
             width="600"
             trigger="click">
-          <el-table :data="gridData">
-              <el-table-column width="300" property="featureName" label="Feature Name"></el-table-column>
+          <el-table
+
+              border
+              :data="gridData">
+            <el-table-column width="300" property="featureName" label="Feature Name"></el-table-column>
             <el-table-column width="300" property="description" label="Description"></el-table-column>
           </el-table>
 
@@ -41,6 +44,7 @@
               :data="pcaplist"
               border
               stripe
+              max-height="500"
               slot="reference"
           >
             <!--          timeStamp: String,-->
@@ -99,6 +103,7 @@ export default {
         pagenum: 1,
         pagesize: 2
       },
+      searchInfo: '',
       pcaplist: [{
         timeStamp: 'TString',
         srcIp: 'SString',
@@ -108,9 +113,441 @@ export default {
         protocol: 'PString',
         Size: 8,
         Frame: 'F'
-
-
-      }],
+      },
+        {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        }, {
+          timeStamp: 'TString',
+          srcIp: 'SString',
+          desIp: 'DString',
+          srcPort: 'SString',
+          desPort: 'DString',
+          protocol: 'PString',
+          Size: 8,
+          Frame: 'F'
+        },
+      ],
       gridData: [{featureName: 'fff', description: 'dddd'},]
     }
   },
@@ -118,7 +555,7 @@ export default {
     this.getUserList()
   },
   methods: {
-     getUserList() {
+    getUserList() {
       // const {data: res} = await this.$http.get('users', {params: this.queryInfo})
       // console.log(res);
       // if (res.meta.status !== 200) return this.$message.error('获取用户失败');
