@@ -8,10 +8,16 @@
     <el-card>
       <div slot="header">
         <span>网络物理拓扑</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="startMacTopo">生成拓扑</el-button>
+
+        <el-button style="float:right;padding: 6px" type="primary" @click="startMacTopo">生成拓扑</el-button>
       </div>
       <body>
-      <div id="macGraph" style="width: 100%; height: 690px" ref="macGraph">a</div>
+      <div id="macGraph" style="width: 100%; height: 690px" ref="macGraph">
+        <el-alert
+            title="点击“生成拓扑”开始"
+            type="success">
+        </el-alert>
+      </div>
       </body>
 
     </el-card>
@@ -26,6 +32,10 @@ export default {
   name: "Netmac",
   data() {
     return {
+      jsonData: {
+        'ip1': ['1ch1', '1ch12'],
+        'ip2': ['2ch1', '2ch12'],
+      },
       option: {
         tooltip: {//鼠标放到节点或边上显示的东西
           show: true,   //默认显示
@@ -179,113 +189,114 @@ export default {
           //别名为nodes   name:影响图形标签显示,value:影响选中后值得显示,category:所在类目的index,symbol:类目节点标记图形,symbolSize:10图形大小
           //label:标签样式。
           data: [
-            {
-              id: 0,
-              category: 0,
-              name: '101.133.8.88',
-              value: 20,
-
-            }, {
-              id: 1,
-              category: 1,
-              name: '192.168.8.88',
-              value: 20,
-
-            }, {
-              id: 2,
-              category: 2,
-              name: '7001',
-              value: 20,
-              yId: "jvm",
-              host: "192.168.6.37",
-              port: "7001",
-              username: "weblogic",
-              pwd: "weblogic1"
-            }, {
-              id: 3,
-              category: 2,
-              name: '7100',
-              value: 20,
-
-            }, {
-              id: 4,
-              category: 1,
-              name: '102.12.33.23',
-              value: 20,
-
-            }, {
-              id: 5,
-              category: 2,
-              name: '7001',
-              value: 20,
-
-            }, {
-              id: 6,
-              category: 2,
-              name: '7100',
-              value: 20,
-
-            }, {
-              id: 7,
-              category: 2,
-              name: '7001',
-              value: 20,
-
-            }, {
-              id: 8,
-              category: 1,
-              name: '101.11.66.6',
-              value: 20,
-
-            }, {
-              id: 9,
-              category: 2,
-              name: '7101',
-              value: 20,
-
-            }, {
-              id: 10,
-              category: 2,
-              name: '7101',
-              value: 20,
-
-            }, {
-              id: 11,
-              category: 2,
-              name: '7001',
-              value: 20,
-
-            }, {
-              id: 12,
-              category: 2,
-              name: '7100',
-              value: 20,
-
-            }, {
-              id: 13,
-              category: 3,
-              name: '192.168.44.44',
-              value: 20,
-
-            }, {
-              id: 14,
-              category: 3,
-              name: '192.168.33.33',
-              value: 20,
-
-            }, {
-              id: 15,
-              category: 3,
-              name: '192.168.22.22',
-              value: 20,
-
-            }, {
-              id: 16,
-              category: 4,
-              name: '55555555555',
-              value: 20,
-
-            }],
+            // {
+            //   id: 0,
+            //   category: 0,
+            //   name: '101.133.8.88',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 1,
+            //   category: 1,
+            //   name: '192.168.8.88',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 2,
+            //   category: 2,
+            //   name: '7001',
+            //   value: 20,
+            //   yId: "jvm",
+            //   host: "192.168.6.37",
+            //   port: "7001",
+            //   username: "weblogic",
+            //   pwd: "weblogic1"
+            // }, {
+            //   id: 3,
+            //   category: 2,
+            //   name: '7100',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 4,
+            //   category: 1,
+            //   name: '102.12.33.23',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 5,
+            //   category: 2,
+            //   name: '7001',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 6,
+            //   category: 2,
+            //   name: '7100',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 7,
+            //   category: 2,
+            //   name: '7001',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 8,
+            //   category: 1,
+            //   name: '101.11.66.6',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 9,
+            //   category: 2,
+            //   name: '7101',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 10,
+            //   category: 2,
+            //   name: '7101',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 11,
+            //   category: 2,
+            //   name: '7001',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 12,
+            //   category: 2,
+            //   name: '7100',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 13,
+            //   category: 3,
+            //   name: '192.168.44.44',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 14,
+            //   category: 3,
+            //   name: '192.168.33.33',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 15,
+            //   category: 3,
+            //   name: '192.168.22.22',
+            //   value: 20,
+            //
+            // }, {
+            //   id: 16,
+            //   category: 4,
+            //   name: '55555555555',
+            //   value: 20,
+            //
+            // }
+          ],
           categories: [ //symbol name：用于和 legend 对应以及格式化 tooltip 的内容。 label有效
             {
               name: '负载',
@@ -324,57 +335,59 @@ export default {
               }
             }],
           links: [ //edges是其别名代表节点间的关系数据。
-            {
-              source: 1,
-              target: 0
-            }, {
-              source: 4,
-              target: 0
-            }, {
-              source: 8,
-              target: 0
-            }, {
-              source: 2,
-              target: 1
-            }, {
-              source: 3,
-              target: 1
-            }, {
-              source: 5,
-              target: 4
-            }, {
-              source: 6,
-              target: 4
-            }, {
-              source: 7,
-              target: 4
-            }, {
-              source: 9,
-              target: 8
-            }, {
-              source: 10,
-              target: 8
-            }, {
-              source: 11,
-              target: 8
-            }, {
-              source: 12,
-              target: 8
-            }, {
-              source: 13,
-              target: 6
-            }, {
-              source: 14,
-              target: 6
-            }, {
-              source: 15,
-              target: 2
-            }, {
-              source: 16,
-              target: 15
-            }]
+            // {
+            //   source: 1,
+            //   target: 0
+            // }, {
+            //   source: 4,
+            //   target: 0
+            // }, {
+            //   source: 8,
+            //   target: 0
+            // }, {
+            //   source: 2,
+            //   target: 1
+            // }, {
+            //   source: 3,
+            //   target: 1
+            // }, {
+            //   source: 5,
+            //   target: 4
+            // }, {
+            //   source: 6,
+            //   target: 4
+            // }, {
+            //   source: 7,
+            //   target: 4
+            // }, {
+            //   source: 9,
+            //   target: 8
+            // }, {
+            //   source: 10,
+            //   target: 8
+            // }, {
+            //   source: 11,
+            //   target: 8
+            // }, {
+            //   source: 12,
+            //   target: 8
+            // }, {
+            //   source: 13,
+            //   target: 6
+            // }, {
+            //   source: 14,
+            //   target: 6
+            // }, {
+            //   source: 15,
+            //   target: 2
+            // }, {
+            //   source: 16,
+            //   target: 15
+            // }
+          ]
         }]
       },
+
       i: 30,
       isStart: false,
       myChart: '',
@@ -386,7 +399,8 @@ export default {
     //   console.log(this.isStart)
     //   this.drawGraph();
     // });
-  }, beforeDestroy() {
+  },
+  beforeDestroy() {
     // 页面销毁时关闭ws。因为有可能ws连接接收数据尚未完成，用户就跳转了页面
     // 在需要主动关闭ws的地方都可以调用该方法
     closeWebsocket()
@@ -397,41 +411,45 @@ export default {
       let myChart = this.$echarts.init(this.$refs.macGraph);
       this.myChart = myChart;
       myChart.showLoading();
-      if (this.isStart) {
-        myChart.setOption(this.option);
-        let res = []
-        this.timeInterval = setInterval(() => {
-          // this.option.series[0].data.push({
-          //   id: this.i,
-          //   category: 4,
-          //   name: this.i + 'k',
-          //   value: 20,
-          // });
-          this.option.series[0].data.push({
-            id: this.i,
-            category: 4,
-            name: this.i + 'k',
-            value: 20,
-          })
-          console.log(this.i++)
-          res = this.option.series[0].data
 
-          myChart.setOption({
-            series: [{
-              data: res
-            }]
-          })
-        }, 500)//此处要理解为什么是1000*i
+      myChart.setOption(this.option);
+      let res = []
+      // this.i=30
+      // this.timeInterval = setInterval(() => {
+      //   // this.option.series[0].data.push({
+      //   //   id: this.i,
+      //   //   category: 4,
+      //   //   name: this.i + 'k',
+      //   //   value: 20,
+      //   // });
+      //   this.option.series[0].data.push({
+      //     id: this.i,
+      //     category: 4,
+      //     name: this.i + 'k',
+      //     value: 20,
+      //   })
+      //   // console.log(this.i++)
+      //   res = this.option.series[0].data
+      //
+      //   myChart.setOption({
+      //     series: [{
+      //       data: res
+      //     }]
+      //   })
+      //   this.i++
+      // }, 500)//此处要理解为什么是1000*i
 
-        myChart.hideLoading();
-        window.onresize = myChart.resize;
-      }
+      myChart.hideLoading();
+      window.onresize = myChart.resize;
     },
 
     wsMessage(data) {
       const dataJson = data
       console.log(dataJson)
+
       // 这里写拿到数据后的业务代码
+
+
     },
     // ws连接失败，组件要执行的代码
     wsError() {
@@ -442,22 +460,62 @@ export default {
       closeWebsocket()
       // 跟后端协商，需要什么参数数据给后台
       const obj = {
-        monitorUrl: 'xxxxxxxxxxxxx',
-        userName: 'xxxxxxxxxx'
+
       }
       // 发起ws请求
-      sendWebsocket('ws://test.ws.com', obj, this.wsMessage, this.wsError)
+      sendWebsocket('ws://test.ws.com/' + 'getNetTopo', obj, this.wsMessage, this.wsError)
     },
 
+    //   id: 14,
+    //   category: 3,
+    //   name: '192.168.33.33',
+    //   value: 20,
 
     startMacTopo() {
       if (this.isStart) {
         window.clearInterval(this.timeInterval)
         this.myChart.clear()
+        this.option.series[0].data = []
+        this.option.series[0].links = []
+        closeWebsocket()
       }
       this.isStart = !this.isStart;
 
-      this.drawGraph()
+
+      //转格式到图的data和links数组.后面放到wsMessage里
+
+
+      if (this.isStart) {
+        this.requstWs()
+        let i = 0;
+        for (let item in this.jsonData) {
+          const ex = {
+            id: i + '',
+            category: i % 4,
+            name: item,
+            value: i
+          }
+          this.option.series[0].data.push(ex)
+          let j = 0;
+          for (let exKey in this.jsonData[item]) {
+            const exc = {
+              id: i + '-' + j,
+              category: i % 4,
+              name: this.jsonData[item][exKey],
+              value: j
+            }
+            this.option.series[0].data.push(exc)
+            this.option.series[0].links.push({
+              source: i + '',
+              target: i + '-' + j,
+            })
+            j++;
+            console.log(exc)
+          }
+          i++
+        }
+        this.drawGraph()
+      }
       console.log(this.isStart);
     },
     getMacList() {

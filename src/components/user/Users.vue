@@ -4,13 +4,13 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>工控网络威胁检测</el-breadcrumb-item>
-      <el-breadcrumb-item>流量时序特征检测</el-breadcrumb-item>
+      <el-breadcrumb-item>流量静态特征检测</el-breadcrumb-item>
     </el-breadcrumb>
     <!--卡片视图-->
     <el-card>
       <div slot="header">
-        <span>时序流量特征检测</span>
-        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+        <span>流量静态特征检测</span>
+        <el-button style="float:right;padding: 6px" type="primary">操作按钮</el-button>
       </div>
       <body>
       <div>
@@ -24,7 +24,7 @@
             </el-input>
           </el-col>
           <el-col :span="4">
-            <el-button type="primary">添加用户</el-button>
+            <!--            <el-button type="primary">添加用户</el-button>-->
           </el-col>
 
         </el-row>
@@ -33,7 +33,6 @@
             width="600"
             trigger="click">
           <el-table
-
               border
               :data="gridData">
             <el-table-column width="300" property="featureName" label="Feature Name"></el-table-column>
@@ -46,6 +45,7 @@
               stripe
               max-height="500"
               slot="reference"
+              :sortable="true"
           >
             <!--          timeStamp: String,-->
             <!--          srcIp:String,-->
@@ -123,376 +123,7 @@ export default {
           protocol: 'PString',
           Size: 8,
           Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
+        },  {
           timeStamp: 'TString',
           srcIp: 'SString',
           desIp: 'DString',

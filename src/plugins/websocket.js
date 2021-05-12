@@ -1,12 +1,14 @@
-
 let websock = null
 let messageCallback = null
 let errorCallback = null
 let wsUrl = ''
 let tryTime = 0
 
+import {Message} from "element-ui";//导入弹窗提示
+
+
 // 接收ws后端返回的数据
-function websocketonmessage (e) {
+function websocketonmessage(e) {
     messageCallback(JSON.parse(e.data))
 }
 
@@ -14,7 +16,7 @@ function websocketonmessage (e) {
  * 发起websocket连接
  * @param {Object} agentData 需要向后台传递的参数数据
  */
-function websocketSend (agentData) {
+function websocketSend(agentData) {
     // 加延迟是为了尽量让ws连接状态变为OPEN
     setTimeout(() => {
         // 添加状态判断，当为OPEN时，发送消息
@@ -24,43 +26,43 @@ function websocketSend (agentData) {
         }
         if (websock.readyState === websock.CLOSED) { // websock.CLOSED = 3
             console.log('websock.readyState=3')
-            this.$message.error('ws连接异常，请稍候重试')
+            Message.error('ws连接异常，请稍候重试/send')
             errorCallback()
         }
     }, 500)
 }
 
 // 关闭ws连接
-function websocketclose (e) {
+function websocketclose(e) {
     // e.code === 1000  表示正常关闭。 无论为何目的而创建, 该链接都已成功完成任务。
     // e.code !== 1000  表示非正常关闭。
     if (e && e.code !== 1000) {
-        this.$message.error('ws连接异常，请稍候重试')
         errorCallback()
-        websock.close()
         // 如果需要设置异常重连则可替换为下面的代码，自行进行测试
-        tryTime=0
-        if (tryTime < 10) {
-          setTimeout(function() {
-           websock = null
-           tryTime++
-           initWebSocket()
-           console.log(`第${tryTime}次重连`)
-         }, 3 * 1000)
+
+        if (tryTime < 3) {
+            setTimeout(function () {
+                websock = null
+                tryTime++
+                initWebSocket()
+                console.log(`第${tryTime}次重连`)
+                Message.error(`正在尝试第${tryTime}次重连`)
+            }, 3 * 1000)
         } else {
-            this.$message.error('重连失败！请稍后重试')
+            Message.error('重连失败！请稍后重试/close')
         }
     }
 }
+
 // 建立ws连接
-function websocketOpen (e) {
+function websocketOpen(e) {
     // console.log('ws连接成功')
 }
 
 // 初始化weosocket
-function initWebSocket () {
+function initWebSocket() {
     if (typeof (WebSocket) === 'undefined') {
-        this.$message.error('您的浏览器不支持WebSocket，无法获取数据')
+        Message.error('您的浏览器不支持WebSocket，无法获取数据')
         return false
     }
 
@@ -76,7 +78,6 @@ function initWebSocket () {
         websocketOpen()
     }
     websock.onerror = function () {
-        this.$message.error('ws连接异常，请稍候重试')
         errorCallback()
     }
     websock.onclose = function (e) {
@@ -91,21 +92,23 @@ function initWebSocket () {
  * @param {function} successCallback 接收到ws数据，对数据进行处理的回调函数
  * @param {function} errCallback ws连接错误的回调函数
  */
-export function sendWebsocket (url, agentData, successCallback, errCallback) {
+export function sendWebsocket(url, agentData, successCallback, errCallback) {
     wsUrl = url
-    initWebSocket()
     messageCallback = successCallback
     errorCallback = errCallback
-    websocketSend(agentData)
+    initWebSocket()
+    if (agentData)
+        websocketSend(agentData)
 }
 
 /**
  * 关闭websocket函数
  */
-export function closeWebsocket () {
+export function closeWebsocket() {
     if (websock) {
         websock.close() // 关闭websocket
         websock.onclose() // 关闭websocket
+        websock = null
     }
 }
 
