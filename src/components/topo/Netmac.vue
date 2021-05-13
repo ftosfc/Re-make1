@@ -12,7 +12,7 @@
         <el-button style="float:right;padding: 6px" type="primary" @click="startMacTopo">生成拓扑</el-button>
       </div>
       <body>
-      <div id="macGraph" style="width: 100%; height: 690px" ref="macGraph">
+      <div id="macGraph" style="width: 100%; height: 400px" ref="macGraph">
         <el-alert
             title="点击“生成拓扑”开始"
             type="success">
@@ -33,8 +33,11 @@ export default {
   data() {
     return {
       jsonData: {
-        'ip1': ['1ch1', '1ch12'],
-        'ip2': ['2ch1', '2ch12'],
+        "e0:d5:5e:08:e1:c6": '01:00:5e:7f:ff:fa',
+        'e0:d5:5e:4a:1d:b4': '01:00:5e:7f:ff:fa',
+        '01:00:5e:7f:ff:fa': 'e0:d5:5e:08:e1:c6,e0:d5:5e:88:15:c3,e0:d5:5e:4a:1d:b4,60:45:cb:87:ad:b6,e0:d5:5e:88:1b:17,e0:d5:5e:88:1f:d8,60:45:cb:86:ea:24',
+        '60:45:cb:87:ad:b6': '01:00:5e:7f:ff:fa,ff:ff:ff:ff:ff:ff',
+        'e0:d5:5e:88:1b:17': '01:00:5e:7f:ff:fa',
       },
       option: {
         tooltip: {//鼠标放到节点或边上显示的东西
@@ -67,34 +70,34 @@ export default {
         animationDuration: 1500,
         animationEasingUpdate: 'quinticInOut',
         color: ['#5470c6', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
-        legend: { //=========圖表控件
-          show: true,
-          textStyle: { //标签的字体样式
-            //color: '#cde6c7', //字体颜色
-            fontStyle: 'normal',//文字字体的风格 'normal'标准 'italic'斜体 'oblique' 倾斜
-            //fontWeight: 'bolder',//'normal'标准'bold'粗的'bolder'更粗的'lighter'更细的或100 | 200 | 300 | 400...
-            fontFamily: 'sans-serif',//文字的字体系列
-            fontWeight: 'normal'
-          },
-          data: [
-            {
-              name: '负载',
-              icon: 'circle',//'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'
-            },
-            {
-              name: '中间件',
-              icon: 'circle'
-            }, {
-              name: '端口号',
-              icon: 'circle'
-            }, {
-              name: '数据库',
-              icon: 'circle'
-            }, {
-              name: '用户名',
-              icon: 'circle'
-            }]
-        },
+        // legend: { //=========圖表控件
+        //   show: true,
+        //   textStyle: { //标签的字体样式
+        //     //color: '#cde6c7', //字体颜色
+        //     fontStyle: 'normal',//文字字体的风格 'normal'标准 'italic'斜体 'oblique' 倾斜
+        //     //fontWeight: 'bolder',//'normal'标准'bold'粗的'bolder'更粗的'lighter'更细的或100 | 200 | 300 | 400...
+        //     fontFamily: 'sans-serif',//文字的字体系列
+        //     fontWeight: 'normal'
+        //   },
+        //   data: [
+        //     {
+        //       name: '负载',
+        //       icon: 'circle',//'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'
+        //     },
+        //     {
+        //       name: '中间件',
+        //       icon: 'circle'
+        //     }, {
+        //       name: '端口号',
+        //       icon: 'circle'
+        //     }, {
+        //       name: '数据库',
+        //       icon: 'circle'
+        //     }, {
+        //       name: '用户名',
+        //       icon: 'circle'
+        //     }]
+        // },
         series: [{
           type: 'graph', //关系图
           name: "Mac", //系列名称，用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
@@ -459,9 +462,7 @@ export default {
       // 防止用户多次连续点击发起请求，所以要先关闭上次的ws请求。
       closeWebsocket()
       // 跟后端协商，需要什么参数数据给后台
-      const obj = {
-
-      }
+      const obj = {}
       // 发起ws请求
       sendWebsocket('ws://test.ws.com/' + 'getNetTopo', obj, this.wsMessage, this.wsError)
     },
@@ -486,8 +487,11 @@ export default {
 
 
       if (this.isStart) {
-        this.requstWs()
+        //this.requstWs()
         let i = 0;
+        let hashMac = []
+        let hashMacJson = {}
+
         for (let item in this.jsonData) {
           const ex = {
             id: i + '',
@@ -495,25 +499,65 @@ export default {
             name: item,
             value: i
           }
-          this.option.series[0].data.push(ex)
           let j = 0;
-          for (let exKey in this.jsonData[item]) {
+          let temp = this.jsonData[item].split(',');
+          if (!hashMac.includes(item)) {
+            hashMac.push(item)
+            hashMacJson[item]= i + ''
+            this.option.series[0].data.push(ex)
+            i++
+          }
+          for (let tempKey of temp) {
             const exc = {
-              id: i + '-' + j,
+              id: i + '',
               category: i % 4,
-              name: this.jsonData[item][exKey],
+              name: tempKey + '',
               value: j
             }
-            this.option.series[0].data.push(exc)
+            // console.log(tempKey)
+            if (!hashMac.includes(tempKey)) {
+              hashMac.push(tempKey)
+              this.option.series[0].data.push(exc)
+              hashMacJson[tempKey]= i + ''
+              console.log('进来啦')
+              i++
+            }
+            console.log(tempKey)
+            console.log(hashMacJson[tempKey])
             this.option.series[0].links.push({
-              source: i + '',
-              target: i + '-' + j,
+              source: hashMacJson[item],
+              target: hashMacJson[tempKey],
             })
-            j++;
-            console.log(exc)
+            j++
           }
+
+
+          // console.log(i + '--->' + item)
+          // console.log(i + '--->' + this.jsonData[item])
+
+
+          // for (let exKey in this.jsonData[item]) {
+          //   const exc = {
+          //     id: i + '-' + j,
+          //     category: i % 4,
+          //     name: this.jsonData[item][exKey],
+          //     value: j
+          //   }
+          //   console.log(i+'--->'+item)
+          //   console.log(i+'--->'+this.jsonData[item])
+          //   console.log(i+'--->'+this.jsonData[item][exKey])
+          //   this.option.series[0].data.push(exc)
+          //   this.option.series[0].links.push({
+          //     source: i + '',
+          //     target: i + '-' + j,
+          //   })
+          //   j++;
+          //   //console.log(exc)
+          // }
           i++
         }
+        console.log(this.option.series[0].data)
+        console.log(this.option.series[0].links)
         this.drawGraph()
       }
       console.log(this.isStart);
