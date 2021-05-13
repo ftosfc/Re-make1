@@ -102,8 +102,8 @@ export default {
         {
           id: 5,
           authName: 'Pcap文件分析',
-          path: '/ate',
-          children: []
+          path: '',
+          children: [{id: 5_1, authName: 'pcap文件', path: 'pcap',},]
         },
 
       ],
