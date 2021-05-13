@@ -8,17 +8,21 @@
     <el-card>
       <div slot="header">
         <span>网络物理拓扑</span>
+        <el-button style="float:right;padding: 6px" type="primary" @click="clearMacTopo">清空</el-button>
+        <el-button style="float:right;padding: 6px;margin-right:6px" type="primary" @click="stopMacTopo">停止</el-button>
 
         <el-button style="float:right;padding: 6px" type="primary" @click="startMacTopo">生成拓扑</el-button>
+
+
       </div>
-      <body>
-      <div id="macGraph" style="width: 100%; height: 400px" ref="macGraph">
+
+      <div id="macGraph" class="macGraph" ref="macGraph" style="width: 100%;height: 600px">
         <el-alert
             title="点击“生成拓扑”开始"
             type="success">
         </el-alert>
       </div>
-      </body>
+
 
     </el-card>
   </div>
@@ -32,13 +36,7 @@ export default {
   name: "Netmac",
   data() {
     return {
-      jsonData: {
-        "e0:d5:5e:08:e1:c6": '01:00:5e:7f:ff:fa',
-        'e0:d5:5e:4a:1d:b4': '01:00:5e:7f:ff:fa',
-        '01:00:5e:7f:ff:fa': 'e0:d5:5e:08:e1:c6,e0:d5:5e:88:15:c3,e0:d5:5e:4a:1d:b4,60:45:cb:87:ad:b6,e0:d5:5e:88:1b:17,e0:d5:5e:88:1f:d8,60:45:cb:86:ea:24',
-        '60:45:cb:87:ad:b6': '01:00:5e:7f:ff:fa,ff:ff:ff:ff:ff:ff',
-        'e0:d5:5e:88:1b:17': '01:00:5e:7f:ff:fa',
-      },
+      jsonData: [],
       option: {
         tooltip: {//鼠标放到节点或边上显示的东西
           show: true,   //默认显示
@@ -115,7 +113,7 @@ export default {
             //initLayout: ,//力引导的初始化布局，默认使用xy轴的标点
             repulsion: [0, 50],//节点之间的斥力因子。支持数组表达斥力范围，值越大斥力越大。
             gravity: 0.02,//节点受到的向中心的引力因子。该值越大节点越往中心点靠拢。
-            edgeLength: 50,//边的两个节点之间的距离，这个距离也会受 repulsion。[10, 50] 。值越小则长度越长
+            edgeLength: 150,//边的两个节点之间的距离，这个距离也会受 repulsion。[10, 50] 。值越小则长度越长
             friction: 0.6,
             layoutAnimation: true
             //因为力引导布局会在多次迭代后才会稳定，这个参数决定是否显示布局的迭代动画，在浏览器端节点数据较多（>100）的时候不建议关闭，布局过程会造成浏览器假死。
@@ -126,7 +124,7 @@ export default {
           draggable: true,//节点是否可拖拽，只在使用力引导布局(layout: 'force',)的时候有用。
           focusNodeAdjacency: true,//是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点。
           symbol: 'circle',//关系图节点标记的图形。ECharts 提供的标记类型包括 'circle'(圆形), 'rect'（矩形）, 'roundRect'（圆角矩形）, 'triangle'（三角形）, 'diamond'（菱形）, 'pin'（大头针）, 'arrow'（箭头）  也可以通过 'image://url' 设置为图片，其中 url 为图片的链接。'path:// 这种方式可以任意改变颜色并且抗锯齿
-          symbolSize: 20,//也可以用数组分开表示宽和高，例如 [20, 10] 如果需要每个数据的图形大小不一样，可以设置为如下格式的回调函数：(value: Array|number, params: Object) => number|Array
+          symbolSize: 10,//也可以用数组分开表示宽和高，例如 [20, 10] 如果需要每个数据的图形大小不一样，可以设置为如下格式的回调函数：(value: Array|number, params: Object) => number|Array
           //symbolRotate:,//关系图节点标记的旋转角度。注意在 markLine 中当 symbol 为 'arrow' 时会忽略 symbolRotate 强制设置为切线的角度。
           //symbolOffset:[0,0],//关系图节点标记相对于原本位置的偏移。[0, '50%']
           edgeSymbol: ['none', 'none'],//边两端的标记类型，可以是一个数组分别指定两端，也可以是单个统一指定。默认不显示标记，常见的可以设置为箭头，如下：edgeSymbol: ['circle', 'arrow']
@@ -472,26 +470,50 @@ export default {
     //   name: '192.168.33.33',
     //   value: 20,
 
-    startMacTopo() {
+
+    stopMacTopo() {
       if (this.isStart) {
+        window.clearInterval(this.timeInterval)
+        this.isStart = false;
+        this.$message.success('已停止')
+      } else this.$message.error('请先开始')
+    },
+    clearMacTopo() {
+
         window.clearInterval(this.timeInterval)
         this.myChart.clear()
         this.option.series[0].data = []
         this.option.series[0].links = []
         closeWebsocket()
-      }
-      this.isStart = !this.isStart;
+        this.isStart = false;
+        this.$message.success('已清空')
+    },
 
-
+    startMacTopo() {
       //转格式到图的data和links数组.后面放到wsMessage里
-
-
-      if (this.isStart) {
+      if (!this.isStart) {
+        this.isStart = true
+        this.$message.success('正在分析')
         //this.requstWs()
+        this.getMacList()
+        // console.log(this.option.series[0].data)
+        // console.log(this.option.series[0].links)
+
+      }
+      // console.log(this.isStart);
+    },
+    getMacList() {
+      this.drawGraph()
+      this.timeInterval = setInterval(async () => {
+        this.option.series[0].data = []
+        this.option.series[0].links = []
+        const {data: res} = await this.$http.get('/api/getNetTopo')
+        let resla = res.replace(/\'/g, "\"");
+        this.jsonData = await JSON.parse(resla)
+        console.log(this.jsonData)
         let i = 0;
         let hashMac = []
         let hashMacJson = {}
-
         for (let item in this.jsonData) {
           const ex = {
             id: i + '',
@@ -500,10 +522,12 @@ export default {
             value: i
           }
           let j = 0;
+          // console.log(item)
+          // console.log(this.jsonData[item])
           let temp = this.jsonData[item].split(',');
           if (!hashMac.includes(item)) {
             hashMac.push(item)
-            hashMacJson[item]= i + ''
+            hashMacJson[item] = i + ''
             this.option.series[0].data.push(ex)
             i++
           }
@@ -518,12 +542,12 @@ export default {
             if (!hashMac.includes(tempKey)) {
               hashMac.push(tempKey)
               this.option.series[0].data.push(exc)
-              hashMacJson[tempKey]= i + ''
-              console.log('进来啦')
+              hashMacJson[tempKey] = i + ''
+              // console.log('进来啦')
               i++
             }
-            console.log(tempKey)
-            console.log(hashMacJson[tempKey])
+            // console.log(tempKey)
+            // console.log(hashMacJson[tempKey])
             this.option.series[0].links.push({
               source: hashMacJson[item],
               target: hashMacJson[tempKey],
@@ -556,16 +580,13 @@ export default {
           // }
           i++
         }
-        console.log(this.option.series[0].data)
-        console.log(this.option.series[0].links)
-        this.drawGraph()
-      }
-      console.log(this.isStart);
-    },
-    getMacList() {
-      // const {data: res} = await this.$http.get('users', {params: this.queryInfo})
-      // console.log(res);
-      // if (res.meta.status !== 200) return this.$message.error('获取用户失败');
+
+        this.myChart.setOption(this.option)
+      }, 2000)
+
+      // return true;
+
+
       // this.userlist = res.data.users;
       // this.total = res.data.total;
       // this.$http.get('json').done(data => {
@@ -582,17 +603,31 @@ export default {
       //   }]
       // }, true)
     },
-    getRes() {
+    windowFull() {
       //此处使用let是关键，也可以使用闭包。原理不再赘述
-
+      let total = document.documentElement.clientHeight;
+      let colHeight = total - 100 - this.$refs.macGraph.offsetTop;
+      this.$refs.macGraph.style.height = colHeight + "px";
     },
     created() {
       this.option.series[0].data = []
+
     }
   }
 }
 </script>
 
 <style less="lang" scoped>
-
+/*.el-card {*/
+/*  margin: 0;*/
+/*  height: 100%;*/
+/*}*/
+/*.el-card__body{*/
+/*  margin: 0;*/
+/*  height: 100%;*/
+/*}*/
+/*.macGraph {*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*}*/
 </style>

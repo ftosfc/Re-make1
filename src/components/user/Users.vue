@@ -10,7 +10,13 @@
     <el-card>
       <div slot="header">
         <span>流量静态特征检测</span>
-        <el-button style="float:right;padding: 6px" type="primary">操作按钮</el-button>
+
+        <el-button style="float:right;padding: 6px" type="primary" @click="clearIpfixList">清空</el-button>
+        <el-button style="float:right;padding: 6px;margin-right:6px" type="primary" @click="stopIpfixList">停止
+        </el-button>
+
+        <el-button style="float:right;padding: 6px" type="primary" @click="getUserList">开始</el-button>
+
       </div>
       <body>
       <div>
@@ -55,14 +61,21 @@
             <!--          Size:Int-->
             <!--          Frame:long long-->
             <el-table-column label="" type="index"></el-table-column>
-            <el-table-column label="Timestamp" prop="timeStamp"></el-table-column>
-            <el-table-column label="Source IP" prop="srcIp"></el-table-column>
-            <el-table-column label="Source Port" prop="srcPort"></el-table-column>
-            <el-table-column label="Destination IP" prop="desIp"></el-table-column>
-            <el-table-column label="Protocol" prop="protocol"></el-table-column>
+            <el-table-column label="TimeStamp" prop="timestamp"></el-table-column>
 
-            <el-table-column label="Frame" prop="Frame"></el-table-column>
-            <el-table-column label="Size" prop="Size"></el-table-column>
+            <el-table-column label="Source IP" prop="srcip"></el-table-column>
+            <el-table-column label="Destination IP" prop="destip"></el-table-column>
+
+            <el-table-column label="Source Mac" prop="srcmac"></el-table-column>
+            <el-table-column label="Destination Mac" prop="dstmac"></el-table-column>
+
+            <el-table-column label="Source Port" prop="srcport"></el-table-column>
+            <el-table-column label="Destination Port" prop="dstport"></el-table-column>
+
+
+            <el-table-column label="Predict Protocol" prop="predict_protocol"></el-table-column>
+
+            <el-table-column label="Ethertype" prop="ethertype"></el-table-column>
 
 
             <!--          <el-table-column label="Frame">-->
@@ -104,98 +117,57 @@ export default {
         pagesize: 2
       },
       searchInfo: '',
-      pcaplist: [{
-        timeStamp: 'TString',
-        srcIp: 'SString',
-        desIp: 'DString',
-        srcPort: 'SString',
-        desPort: 'DString',
-        protocol: 'PString',
-        Size: 8,
-        Frame: 'F'
-      },
-        {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        },  {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        }, {
-          timeStamp: 'TString',
-          srcIp: 'SString',
-          desIp: 'DString',
-          srcPort: 'SString',
-          desPort: 'DString',
-          protocol: 'PString',
-          Size: 8,
-          Frame: 'F'
-        },
+      timeInterval: null,
+      pcaplist: [
+        // {
+        //   'destip': '224.0.0.22',
+        //   'dstmac': '01:00:5e:00:00:16',
+        //   'dstport': 0,
+        //   'ethertype': 2,
+        //   'predict_protocol': ['OMF'],
+        //   'srcip': '192.168.1.113',
+        //   'srcmac': 'e0:d5:5e:44:7d:f4',
+        //   'srcport': 0,
+        //   'timestamp': 1620897662493
+        // }
       ],
-      gridData: [{featureName: 'fff', description: 'dddd'},]
+      gridData: [{featureName: 'fff', description: 'dddd'},],
+      isStart: false
     }
   },
   created() {
-    this.getUserList()
+    // this.getUserList()
   },
   methods: {
     getUserList() {
-      // const {data: res} = await this.$http.get('users', {params: this.queryInfo})
-      // console.log(res);
+      if (!this.isStart) {
+        window.clearInterval(this.timeInterval)
+        this.isStart = true
+        this.$message.success('正在分析')
+        this.timeInterval = setInterval(async () => {
+          console.log('a')
+          const {data: res} = await this.$http.get('/api/getipfix')
+          console.log('b')
+          let resla = res.replace(/\'/g, "\"");
+          this.pcaplist = JSON.parse(resla).reverse()
+        }, 1000)
+      }
       // if (res.meta.status !== 200) return this.$message.error('获取用户失败');
-      // this.userlist = res.data.users;
-      // this.total = res.data.total;
+    },
+    clearIpfixList() {
+        window.clearInterval(this.timeInterval)
+        this.pcaplist = []
+        this.$message.success('已清空')
+        this.isStart = false
+    },
+    stopIpfixList() {
+      if (this.isStart) {
+        window.clearInterval(this.timeInterval)
+        this.$message.success('已停止')
+        this.isStart = false
+      } else this.$message.error('请先开始')
     }
-
   },
-
 }
 </script>
 

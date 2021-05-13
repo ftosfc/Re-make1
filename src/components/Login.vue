@@ -53,7 +53,7 @@ export default {
       this.$refs.loginFormRef.validate(async valid=>{
         // console.log(valid)//boolean值成功与否
         if(!valid)return;
-        const {data:res}=await this.$http.post("login",this.loginForm);
+        const {data:res}=await this.$http.post("http://www.ysqorz.top:8888/api/private/v1/login",this.loginForm);
         if(res.meta.status !==200)return this.$message.error("登录失败");
 
         this.$message.success("登录成功");

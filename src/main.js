@@ -3,10 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element.js'
+import Resource from 'vue-resource';
+
 
 import './assets/css/global.css'
 import axios from 'axios'
-axios.defaults.baseURL='http://www.ysqorz.top:8888/api/private/v1/'
+// axios.defaults.baseURL='http://www.ysqorz.top:8888/api/private/v1/'
 axios.interceptors.request.use(config=>{
   config.headers.Authorization=window.sessionStorage.getItem('token');
   return config;
