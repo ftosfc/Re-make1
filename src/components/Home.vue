@@ -6,6 +6,7 @@
         <div>
           <img src="../assets/logo-home.jpg" style="width: 50px" alt="">
           <span>网络</span>
+
         </div>
         <el-button type="info" @click="logout">
           退出
@@ -88,7 +89,10 @@ export default {
           children: [
             {id: 2_1, authName: '流量静态特征检测', path: 'users',},
             {id: 2_2, authName: '流量时序特征检测', path: 'ipfix',},
-            {id: 2_3, authName: '敏感协议分析', path: '',},]
+            {id: 2_3, authName: '敏感协议分析', path: '',},
+            {id: 2_4, authName: '设备管理', path: 'devicemanage',},
+
+          ]
         },
         {
           id: 3,
@@ -102,8 +106,8 @@ export default {
         {
           id: 5,
           authName: 'Pcap文件分析',
-          path: '/ate',
-          children: []
+          path: '',
+          children: [{id: 5_1, authName: 'pcap文件', path: 'pcap',},]
         },
 
       ],

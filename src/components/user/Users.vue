@@ -40,9 +40,20 @@
             trigger="click">
           <el-table
               border
-              :data="gridData">
-            <el-table-column width="300" property="featureName" label="Feature Name"></el-table-column>
-            <el-table-column width="300" property="description" label="Description"></el-table-column>
+
+              :data="detailData">
+            <el-table-column label="序号" type="index"></el-table-column>
+            <el-table-column label="TimeStamp" prop="timestamp"></el-table-column>
+
+            <el-table-column label="源IP : 端口" prop="srcip_port"></el-table-column>
+
+            <el-table-column label="目的IP : 端口" prop="dstip_port"></el-table-column>
+
+
+            <el-table-column label="Predict Protocol" prop="protocol"></el-table-column>
+
+            <el-table-column label="帧大小" prop="size"></el-table-column>
+            <el-table-column label="Payload" prop="payload"></el-table-column>
           </el-table>
 
           <el-table
@@ -131,7 +142,13 @@ export default {
         //   'timestamp': 1620897662493
         // }
       ],
-      gridData: [{featureName: 'fff', description: 'dddd'},],
+      detailData: [
+        {
+          timestamp: 'fff',
+          description: 'dddd'
+        },
+      ]
+      ,
       isStart: false
     }
   },
@@ -146,7 +163,7 @@ export default {
         this.$message.success('正在分析')
         this.timeInterval = setInterval(async () => {
           console.log('a')
-          const {data: res} = await this.$http.get('/api/getipfix')
+          const {data: res} = await this.$http.get('/api/getipfix/')
           console.log('b')
           let resla = res.replace(/\'/g, "\"");
           this.pcaplist = JSON.parse(resla).reverse()
@@ -155,10 +172,10 @@ export default {
       // if (res.meta.status !== 200) return this.$message.error('获取用户失败');
     },
     clearIpfixList() {
-        window.clearInterval(this.timeInterval)
-        this.pcaplist = []
-        this.$message.success('已清空')
-        this.isStart = false
+      window.clearInterval(this.timeInterval)
+      this.pcaplist = []
+      this.$message.success('已清空')
+      this.isStart = false
     },
     stopIpfixList() {
       if (this.isStart) {

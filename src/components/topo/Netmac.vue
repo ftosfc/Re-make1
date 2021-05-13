@@ -484,7 +484,7 @@ export default {
         this.myChart.clear()
         this.option.series[0].data = []
         this.option.series[0].links = []
-        closeWebsocket()
+        // closeWebsocket()
         this.isStart = false;
         this.$message.success('已清空')
     },
@@ -507,7 +507,7 @@ export default {
       this.timeInterval = setInterval(async () => {
         this.option.series[0].data = []
         this.option.series[0].links = []
-        const {data: res} = await this.$http.get('/api/getNetTopo')
+        const {data: res} = await this.$http.get('/api/getNetTopo/')
         let resla = res.replace(/\'/g, "\"");
         this.jsonData = await JSON.parse(resla)
         console.log(this.jsonData)

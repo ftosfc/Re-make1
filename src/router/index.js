@@ -12,6 +12,8 @@ const Netmac = () => import("../components/topo/Netmac")
 const Ate = () => import("../components/Ate")
 const Netstatus = () => import("../components/twin/Netstatus")
 const Secanalysis = () => import("../components/twin/Secanalysis")
+const Pcap = () => import("../components/Pcap")
+const Devicemanage = () => import("../components/user/deviceManage")
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,11 +27,13 @@ const routes = [
             {path: '/welcome', component: Welcome},
             {path: '/users', component: Users},
             {path: '/ipfix', component: Ipfix},
+            {path: '/devicemanage', component: Devicemanage},
             {path: '/netlogic', component: Netlogic},
             {path: '/netmac', component: Netmac},
             {path: '/ate', component: Ate},
             {path: '/netstatus', component: Netstatus},
-            {path: '/secanalysis', component: Secanalysis}
+            {path: '/secanalysis', component: Secanalysis},
+            {path: '/pcap', component: Pcap},
         ]
     },
 
